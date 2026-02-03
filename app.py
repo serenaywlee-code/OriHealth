@@ -39,9 +39,10 @@ body, .block-container, .main {
 .card {
     background-color: white;
     border-radius: 16px;
-    padding: 24px;
+    padding: 32px 24px;  /* Padding inside the card */
     margin-top: 20px;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    line-height: 1.6;  /* makes text easier to read */
 }
 
 /* Results */
@@ -74,7 +75,7 @@ body, .block-container, .main {
 .disclaimer {
     background: rgba(254, 202, 202, 0.45);
     border-left: 6px solid #dc2626;
-    padding: 18px;
+    padding: 24px;
     border-radius: 14px;
     color: #b91c1c;
     font-size: 15px;
@@ -179,13 +180,13 @@ st.markdown("<div class='card'>", unsafe_allow_html=True)
 st.markdown("""
 <h3 style='color:#3275a8;'>About Oral Cancer & Oral Health</h3>
 
-<strong>What is Oral Cancer?</strong><br>
-Oral cancer is a type of cancer that starts in the mouth or throat. It can affect the lips, tongue, cheeks, the floor and roof of the mouth, sinuses, or throat. Finding it early is very important because treatment works better and survival chances are higher.<br><br>
+<p><strong>What is Oral Cancer?</strong><br>
+Oral cancer is a type of cancer that starts in the mouth or throat. It can affect the lips, tongue, cheeks, the floor and roof of the mouth, sinuses, or throat. Finding it early is very important because treatment works better and survival chances are higher.</p>
 
-<strong>Why Oral Health Matters</strong><br>
-Maintaining good oral health is essential not only for preventing cavities and gum disease, but also for early detection of oral cancer and other serious conditions. Regular dental check-ups and self-examinations can help identify abnormalities early.<br><br>
+<p><strong>Why Oral Health Matters</strong><br>
+Maintaining good oral health is essential not only for preventing cavities and gum disease, but also for early detection of oral cancer and other serious conditions. Regular dental check-ups and self-examinations can help identify abnormalities early.</p>
 
-<strong>Key Reasons to Prioritize Oral Health:</strong>
+<p><strong>Key Reasons to Prioritize Oral Health:</strong></p>
 <ul>
 <li>Early Detection: Regular oral exams catch cancer and precancerous lesions early.</li>
 <li>Better Outcomes: Early detection leads to 80-90% survival rate.</li>
@@ -193,7 +194,7 @@ Maintaining good oral health is essential not only for preventing cavities and g
 <li>Prevention: Good hygiene and check-ups prevent serious problems.</li>
 </ul>
 
-<strong>Warning Signs to Watch For:</strong>
+<p><strong>Warning Signs to Watch For:</strong></p>
 <ul>
 <li>Sores or lesions in the mouth that don't heal</li>
 <li>White or red patches in the mouth</li>
