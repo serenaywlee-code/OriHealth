@@ -13,7 +13,7 @@ st.set_page_config(
 # ---------------- STYLES ----------------
 st.markdown("""
 <style>
-/* Page background */
+/* Full page background */
 body, .block-container, .main {
     background-color: #dff0fb !important;  /* Light blue background */
 }
@@ -33,6 +33,27 @@ body, .block-container, .main {
     font-size: 16px;
     color: #4a4a4a;
     margin-bottom: 36px;
+}
+
+/* Card for upload and results */
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+}
+
+/* About section */
+.about-card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+    color: #333333;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 /* Results */
@@ -67,7 +88,7 @@ body, .block-container, .main {
     border-left: 6px solid #dc2626;
     padding: 18px;
     border-radius: 14px;
-    color: #b91c1c;
+    color: #dc2626;
     font-size: 15px;
     margin-top: 32px;
 }
@@ -81,7 +102,6 @@ st.markdown("""
 Upload an image of the oral cavity to receive an AI-based screening result.<br>
 This tool is for educational purposes only and does not replace professional diagnosis.
 </div>
-
 """, unsafe_allow_html=True)
 
 # ---------------- MODEL ----------------
@@ -106,7 +126,7 @@ def preprocess(img):
 st.markdown("<div class='card'>", unsafe_allow_html=True)
 
 st.markdown(
-    "<h3 style='color:#3275a8; font-weight:600;'>Upload an oral cavity image (JPG or PNG)</h3>",
+    "<h3 style='color:#3275a8;'>Upload an oral cavity image (JPG or PNG)</h3>",
     unsafe_allow_html=True
 )
 
@@ -132,6 +152,7 @@ if uploaded:
         st.markdown(f"""
         <div class='abnormal'>
         <strong>🔴 High Risk Detected</strong><br>
+        Confidence Score: {risk_score} / 100<br>
         The AI detected features associated with possible abnormalities.
         </div>
         """, unsafe_allow_html=True)
@@ -139,6 +160,7 @@ if uploaded:
         st.markdown(f"""
         <div class='abnormal'>
         <strong>🟡 Moderate Risk Detected</strong><br>
+        Confidence Score: {risk_score} / 100<br>
         Some irregular features were identified.
         </div>
         """, unsafe_allow_html=True)
@@ -146,14 +168,42 @@ if uploaded:
         st.markdown(f"""
         <div class='normal'>
         <strong>🟢 Low Risk</strong><br>
+        Confidence Score: {risk_score} / 100<br>
         No significant abnormalities detected.
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown(
-        f"<div class='score'>Risk Score: {risk_score} / 100</div>",
-        unsafe_allow_html=True
-    )
+st.markdown("</div>", unsafe_allow_html=True)
+
+# ---------------- ABOUT ORAL CANCER & ORAL HEALTH ----------------
+st.markdown("<div class='about-card'>", unsafe_allow_html=True)
+
+st.markdown("""
+<h3>About Oral Cancer & Oral Health</h3>
+
+<strong>What is Oral Cancer?</strong><br>
+Oral cancer is a type of cancer that starts in the mouth or throat. It can affect the lips, tongue, cheeks, the floor and roof of the mouth, sinuses, or throat. Finding it early is very important because treatment works better and survival chances are higher.<br><br>
+
+<strong>Why Oral Health Matters</strong><br>
+Maintaining good oral health is essential not only for preventing cavities and gum disease, but also for early detection of oral cancer and other serious conditions. Regular dental check-ups and self-examinations can help identify abnormalities early.<br><br>
+
+<strong>Key Reasons to Prioritize Oral Health:</strong>
+<ul>
+<li>Early Detection: Regular oral exams catch cancer and precancerous lesions early.</li>
+<li>Better Outcomes: Early detection leads to 80-90% survival rate.</li>
+<li>Overall Health Connection: Oral health affects heart, diabetes, and respiratory health.</li>
+<li>Prevention: Good hygiene and check-ups prevent serious problems.</li>
+</ul>
+
+<strong>Warning Signs to Watch For:</strong>
+<ul>
+<li>Sores or lesions in the mouth that don't heal</li>
+<li>White or red patches in the mouth</li>
+<li>Persistent pain or numbness in the mouth or lips</li>
+<li>Difficulty swallowing, chewing, or moving the jaw</li>
+<li>Lumps or thickening in the cheek or neck</li>
+</ul>
+""", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
 
