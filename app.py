@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import tensorflow as tf
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -10,16 +9,16 @@ st.set_page_config(
     layout="centered"
 )
 
-# ---------------- CUSTOM STYLES ----------------
+# ---------------- CUSTOM STYLING ----------------
 st.markdown("""
 <style>
 
 /* Background */
-body, .stApp {
+.stApp {
     background-color: #D9EDEB;
 }
 
-/* Main Title (keep original blue) */
+/* Main Title */
 .main-title {
     text-align: center;
     font-size: 42px;
@@ -41,25 +40,27 @@ body, .stApp {
     color: #5e99dd;
     font-weight: bold;
     font-size: 22px;
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 /* Body Text */
 .body-text {
     color: #898989;
-    line-height: 1.7;
     font-size: 15px;
+    line-height: 1.7;
 }
 
 /* Risk Box */
 .risk-box {
-    margin-top: 20px;
     padding: 20px;
     border-radius: 12px;
+    margin-top: 20px;
     font-weight: 600;
+    background-color: white;
 }
 
-/* Low */
-.low-risk {
-    background-color: #e6f9ed;
-    border-left: 6px solid #22c55e
+</style>
+""", unsafe_allow_html=True)
+
+# ---------------- HEADER ----------------
+st.markdown("<div class='main-title
