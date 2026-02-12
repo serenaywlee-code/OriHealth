@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+import os
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -10,10 +11,14 @@ st.set_page_config(
     layout="centered"
 )
 
-# ---------------- LOAD MODEL ----------------
+# ---------------- SAFE MODEL LOADING ----------------
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("oral_cancer_model.h5")
+    model_path = "oral_cancer_model.h5"
+    if os.path.exists(model_path):
+        return tf.keras.models.load_model(model_path)
+    else:
+        return None
 
 model = load_model()
 
@@ -26,7 +31,7 @@ st.markdown("""
     background-color: #D9EDEB;
 }
 
-/* Main Title */
+/* Main Title (keep original blue) */
 .main-title {
     text-align: center;
     font-size: 42px;
@@ -58,13 +63,15 @@ st.markdown("""
     line-height: 1.7;
 }
 
-/* Risk Result Box */
+/* Result Box */
 .result-box {
     background-color: white;
     padding: 20px;
     border-radius: 12px;
     margin-top: 20px;
     font-weight: 600;
+    text-align: center;
+    font-size: 18px;
 }
 
 </style>
@@ -81,20 +88,20 @@ if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    # Preprocess image
-    img = image.resize((224, 224))
-    img_array = np.array(img) / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
+    if model is not None:
+        img = image.resize((224, 224))
+        img_array = np.array(img) / 255.0
+        img_array = np.expand_dims(img_array, axis=0)
 
-    # Predict
-    prediction = model.predict(img_array)[0][0]
-    risk_percentage = round(float(prediction) * 100, 2)
+        prediction = model.predict(img_array)[0][0]
+        risk_percentage = round(float(prediction) * 100, 2)
 
-    # Display result
-    st.markdown(
-        f"<div class='result-box'>Predicted Risk Level: {risk_percentage}%</div>",
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f"<div class='result-box'>Predicted Risk Level: {risk_percentage}%</div>",
+            unsafe_allow_html=True
+        )
+    else:
+        st.warning("Model file not found. Make sure 'oral_cancer_model.h5' is uploaded to your repository.")
 
 # ---------------- ABOUT SECTION ----------------
 st.markdown("<div class='section-title'>About Oral Cancer & Oral Health</div>", unsafe_allow_html=True)
