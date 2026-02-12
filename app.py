@@ -32,7 +32,7 @@ st.markdown("""
 .subtitle {
     text-align: center;
     font-size: 16px;
-    color: #898989;
+    color: #4a4a4a;
     margin-bottom: 36px;
 }
 
@@ -49,13 +49,6 @@ st.markdown("""
     margin-top: 14px;
     font-weight: 600;
     color: #374151;
-}
-
-/* Body Text */
-.body-text {
-    color: #898989;
-    font-size: 15px;
-    line-height: 1.7;
 }
 
 /* Results */
@@ -102,8 +95,15 @@ st.markdown("""
 }
 
 .about-text p, .about-text li {
-    color: #4a4a4a;
+    color: #898989;
     font-weight: normal;
+}
+
+/* Body Text */
+.body-text {
+    color: #898989;
+    font-size: 15px;
+    line-height: 1.7;
 }
 </style>
 """, unsafe_allow_html=True)
