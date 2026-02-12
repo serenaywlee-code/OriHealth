@@ -13,8 +13,10 @@ st.set_page_config(
 # ---------------- STYLES ----------------
 st.markdown("""
 <style>
-body, .block-container, .main {
-    background-color: #dff0fb !important;  /* Light blue background */
+
+/* Background */
+.stApp {
+    background-color: #D9EDEB;
 }
 
 /* Title */
