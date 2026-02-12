@@ -160,7 +160,7 @@ if uploaded:
     else:
         st.markdown(f"<div class='normal'><strong>🟢 Low Risk</strong><br>No significant abnormalities detected.</div>", unsafe_allow_html=True)
 
-    st.markdown(f"<div class='score'>Risk Score: {risk_score} / 100</div>", unsafe_allow_html=True)
+    st.markdownst.markdown(f"<div class='score'>Risk Score: {risk_score}%</div>", unsafe_allow_html=True)
 
 # ---------------- ABOUT ORAL CANCER & ORAL HEALTH ----------------
 st.markdown("""
