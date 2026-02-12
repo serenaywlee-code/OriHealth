@@ -51,6 +51,13 @@ st.markdown("""
     color: #374151;
 }
 
+/* Body Text */
+.body-text {
+    color: #898989;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
 /* Results */
 .normal {
     background: #f0fdf4;
