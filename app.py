@@ -14,6 +14,15 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* Import Lora font */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400&display=swap');
+
+/* Apply Lora globally */
+html, body, [class*="css"]  {
+    font-family: 'Lora', serif !important;
+    font-weight: 400 !important;
+}
+
 /* Background */
 .stApp {
     background-color: #D9EDEB;
@@ -22,7 +31,7 @@ st.markdown("""
 /* Title */
 .title {
     font-size: 40px;
-    font-weight: 700;
+    font-weight: 400;
     color: #3275a8;
     text-align: center;
     margin-bottom: 10px;
@@ -36,10 +45,18 @@ st.markdown("""
     margin-bottom: 36px;
 }
 
+/* White Card (Reusable) */
+.white-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 14px;
+    margin-top: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
 /* Upload header */
 .upload-header {
     color: #3275a8;
-    font-weight: 600;
     font-size: 20px;
     margin-bottom: 12px;
 }
@@ -47,7 +64,6 @@ st.markdown("""
 /* Risk score */
 .score {
     margin-top: 14px;
-    font-weight: 600;
     color: #374151;
 }
 
@@ -70,6 +86,25 @@ st.markdown("""
     margin-top: 16px;
 }
 
+/* About Section */
+.about-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 14px;
+    margin-top: 32px;
+    line-height: 1.6;
+}
+
+.about-card h3 {
+    color: #3275a8;
+    margin-top: 18px;
+}
+
+.about-card p,
+.about-card li {
+    color: #898989;
+}
+
 /* Disclaimer */
 .disclaimer {
     background: rgba(254, 202, 202, 0.45);
@@ -82,27 +117,6 @@ st.markdown("""
     line-height: 1.5;
 }
 
-/* About Section White Card */
-.about-card {
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 14px;
-    margin-top: 32px;
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-/* About Text Styling */
-.about-card h3 {
-    color: #3275a8;
-    font-weight: 600;
-    margin-top: 18px;
-}
-
-.about-card p,
-.about-card li {
-    color: #898989;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -133,12 +147,13 @@ def preprocess(img):
     arr = np.array(img) / 255.0
     return np.expand_dims(arr, axis=0).astype(np.float32)
 
-# ---------------- UPLOAD + RESULTS CARD ----------------
-st.markdown("<div class='card'>", unsafe_allow_html=True)
+# ---------------- UPLOAD SECTION (NEW WHITE CARD) ----------------
+st.markdown("<div class='white-card'>", unsafe_allow_html=True)
 
 st.markdown("<div class='upload-header'>Upload an oral cavity image (JPG or PNG)</div>", unsafe_allow_html=True)
 
 uploaded = st.file_uploader("", type=["jpg","jpeg","png"], label_visibility="collapsed")
+
 if uploaded:
     image = Image.open(uploaded)
     st.image(image, use_container_width=True)
@@ -152,18 +167,30 @@ if uploaded:
     risk_score = int(raw_pred * 100)
 
     if risk_score >= 71:
-        st.markdown(f"<div class='abnormal'><strong>🔴 High Risk Detected</strong><br>The AI detected possible abnormalities.</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='abnormal'><strong>🔴 High Risk Detected</strong><br>The AI detected possible abnormalities.</div>",
+            unsafe_allow_html=True
+        )
     elif risk_score >= 41:
-        st.markdown(f"<div class='abnormal'><strong>🟡 Moderate Risk Detected</strong><br>Some irregular features were identified.</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='abnormal'><strong>🟡 Moderate Risk Detected</strong><br>Some irregular features were identified.</div>",
+            unsafe_allow_html=True
+        )
     else:
-        st.markdown(f"<div class='normal'><strong>🟢 Low Risk</strong><br>No significant abnormalities detected.</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='normal'><strong>🟢 Low Risk</strong><br>No significant abnormalities detected.</div>",
+            unsafe_allow_html=True
+        )
 
     st.markdown(f"<div class='score'>Risk Score: {risk_score}%</div>", unsafe_allow_html=True)
 
-# ---------------- ABOUT ORAL CANCER & ORAL HEALTH ----------------
+st.markdown("</div>", unsafe_allow_html=True)
+
+# ---------------- ABOUT SECTION ----------------
 st.markdown("""
 <div class='about-card'>
-<strong>About Oral Cancer & Oral Health Section</strong><br>
+<strong>About Oral Cancer & Oral Health</strong>
+
 <h3>What is Oral Cancer?</h3>
 <p>Oral cancer is a type of cancer that starts in the mouth or throat. It can affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection is very important because treatment works better and survival chances are higher.</p>
 
@@ -173,7 +200,7 @@ st.markdown("""
 <h3>Key Reasons to Prioritize Oral Health:</h3>
 <ul>
 <li>Early Detection: Regular oral examinations can catch cancer in its earliest, most treatable stages.</li>
-<li>Better Outcomes: Early detection has an 80-90% survival rate.</li>
+<li>Better Outcomes: Early detection has an 80–90% survival rate.</li>
 <li>Overall Health: Oral health is linked to heart, diabetes, and respiratory health.</li>
 <li>Prevention: Good hygiene and regular check-ups prevent serious oral problems.</li>
 </ul>
@@ -197,5 +224,3 @@ st.markdown("""
 • Results must not be used for diagnosis or treatment decisions.
 </div>
 """, unsafe_allow_html=True)
-
-
