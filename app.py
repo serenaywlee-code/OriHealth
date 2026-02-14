@@ -84,24 +84,24 @@ st.markdown("""
 
 /* About Oral Cancer & Oral Health Section */
 .about-text {
-    color: #4a4a4a;  /* Grey text */
+    color: #ededed;  /* Grey text */
     line-height: 1.6;
     margin-top: 20px;
 }
 
 .about-text h3 {
     font-weight: bold;
-    color: #4a4a4a;
+    color: #ededed;
 }
 
 .about-text p, .about-text li {
-    color: #898989;
+    color: #ededed;
     font-weight: normal;
 }
 
 /* Body Text */
 .body-text {
-    color: #898989;
+    color: #ededed;
     font-size: 15px;
     line-height: 1.7;
 }
