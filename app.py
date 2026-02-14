@@ -74,7 +74,7 @@ st.markdown("""
 .disclaimer {
     background: rgba(254, 202, 202, 0.45);
     border-left: 6px solid #dc2626;
-    padding: 24px;
+    padding: 20px;
     border-radius: 14px;
     color: #b91c1c;
     font-size: 15px;
@@ -84,26 +84,25 @@ st.markdown("""
 
 /* About Oral Cancer & Oral Health Section */
 .about-text {
-    color: #c7c7c7;  /* Grey text */
+    color: #a1a1a1;  /* Grey text */
     line-height: 1.6;
     margin-top: 20px;
 }
 
-.about-text h3 {
-    font-weight: bold;
-    color: #c7c7c7;
-}
-
 .about-text p, .about-text li {
-    color: #c7c7c7;
+    color: #a1a1a1;
     font-weight: normal;
 }
 
-/* Body Text */
-.body-text {
-    color: #c7c7c7;
+/* About Oral Cancer & Oral Health Section */
+.about-text {
+    background: rgba(255, 255, 255, 1);
+    padding: 20px;
+    border-radius: 14px;
+    color: #b91c1c;
     font-size: 15px;
-    line-height: 1.7;
+    margin-top: 32px;
+    line-height: 1.5;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -164,9 +163,8 @@ if uploaded:
 
 # ---------------- ABOUT ORAL CANCER & ORAL HEALTH ----------------
 st.markdown("""
-<div class='about-text'>
-<h3>About Oral Cancer & Oral Health</h3>
-
+<div class='About Oral Cancer & Oral Health Section'>
+<strong>About Oral Cancer & Oral Health Section</strong><br>
 <h3>What is Oral Cancer?</h3>
 <p>Oral cancer is a type of cancer that starts in the mouth or throat. It can affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection is very important because treatment works better and survival chances are higher.</p>
 
@@ -192,8 +190,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
-
 # ---------------- DISCLAIMER ----------------
 st.markdown("""
 <div class='disclaimer'>
@@ -202,3 +198,5 @@ st.markdown("""
 • Results must not be used for diagnosis or treatment decisions.
 </div>
 """, unsafe_allow_html=True)
+
+
