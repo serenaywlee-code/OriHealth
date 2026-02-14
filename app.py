@@ -82,27 +82,26 @@ st.markdown("""
     line-height: 1.5;
 }
 
-/* About Oral Cancer & Oral Health Section */
-.about-text {
-    color: #a1a1a1;  /* Grey text */
-    line-height: 1.6;
-    margin-top: 20px;
-}
-
-.about-text p, .about-text li {
-    color: #a1a1a1;
-    font-weight: normal;
-}
-
-/* About Oral Cancer & Oral Health */
-.about-text {
-    background: rgba(255, 255, 255, 1);
-    padding: 20px;
+/* About Section White Card */
+.about-card {
+    background: #ffffff;
+    padding: 24px;
     border-radius: 14px;
-    color: #b91c1c;
-    font-size: 15px;
     margin-top: 32px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* About Text Styling */
+.about-card h3 {
+    color: #3275a8;
+    font-weight: 600;
+    margin-top: 18px;
+}
+
+.about-card p,
+.about-card li {
+    color: #898989;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -163,7 +162,7 @@ if uploaded:
 
 # ---------------- ABOUT ORAL CANCER & ORAL HEALTH ----------------
 st.markdown("""
-<div class='About Oral Cancer & Oral Health'>
+<div class='about-card'>
 <strong>About Oral Cancer & Oral Health Section</strong><br>
 <h3>What is Oral Cancer?</h3>
 <p>Oral cancer is a type of cancer that starts in the mouth or throat. It can affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection is very important because treatment works better and survival chances are higher.</p>
