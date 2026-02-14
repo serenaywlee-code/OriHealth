@@ -94,7 +94,7 @@ st.markdown("""
     font-weight: normal;
 }
 
-/* About Oral Cancer & Oral Health Section */
+/* About Oral Cancer & Oral Health */
 .about-text {
     background: rgba(255, 255, 255, 1);
     padding: 20px;
@@ -163,7 +163,7 @@ if uploaded:
 
 # ---------------- ABOUT ORAL CANCER & ORAL HEALTH ----------------
 st.markdown("""
-<div class='About Oral Cancer & Oral Health Section'>
+<div class='About Oral Cancer & Oral Health'>
 <strong>About Oral Cancer & Oral Health Section</strong><br>
 <h3>What is Oral Cancer?</h3>
 <p>Oral cancer is a type of cancer that starts in the mouth or throat. It can affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection is very important because treatment works better and survival chances are higher.</p>
