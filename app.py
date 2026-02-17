@@ -48,10 +48,10 @@ html, body, [class*="css"]  {
 /* White Card */
 .white-card {
     background: #ffffff;
-    padding: 19px;
+    padding: 23px;
     border-radius: 10px;
-    margin-top: 19px;
-    box-shadow: 10px 10px 12px rgba(0,0,0,0.05);
+    margin-top: 10px;
+    box-shadow: 20px 20px 12px rgba(0,0,0,0.05);
 }
 
 /* Upload header */
