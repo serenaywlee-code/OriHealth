@@ -189,7 +189,6 @@ st.markdown("</div>", unsafe_allow_html=True)
 # ---------------- ABOUT SECTION ----------------
 st.markdown("""
 <div class='about-card'>
-<strong>About Oral Cancer & Oral Health</strong>
 
 <h3>What is Oral Cancer?</h3>
 <p>Oral cancer is a type of cancer that starts in the mouth or throat. It can affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection is very important because treatment works better and survival chances are higher.</p>
