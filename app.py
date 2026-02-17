@@ -10,6 +10,9 @@ st.set_page_config(
     layout="centered"
 )
 
+key="oral_upload"
+
+
 # ---------------- STYLES ----------------
 st.markdown("""
 <style>
@@ -124,6 +127,36 @@ html, body, [class*="css"]  {
     font-size: 15px;
     margin-top: 32px;
     line-height: 1.5;
+}
+
+.block-container {
+    padding-top: 0.8rem !important;
+}
+
+.upload-section {
+    background: #ffffff;
+    padding: 23px;
+    border-radius: 10px;
+    margin-top: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.about-card {
+    background: #ffffff;
+    padding: 23px;
+    border-radius: 10px;
+    margin-top: 20px;
+    line-height: 1.6;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.about-card h3 {
+    color: #3275a8;
+    margin-top: 16px;
+}
+
+.about-card h3:first-child {
+    margin-top: 0;
 }
 
 </style>
