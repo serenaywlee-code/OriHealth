@@ -14,6 +14,11 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* Remove Streamlit default top spacing */
+.block-container {
+    padding-top: 1rem !important;
+}
+
 /* Import Lora font */
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400&display=swap');
 
@@ -95,10 +100,13 @@ html, body, [class*="css"]  {
     line-height: 1.6;
     box-shadow: 25px 25px 12px rgba(0,0,0,0.05);
 }
-
 .about-card h3 {
     color: #3275a8;
-    margin-top: 12px;
+    margin-top: 16px;
+}
+
+.about-card h3:first-child {
+    margin-top: 0;
 }
 
 .about-card p,
@@ -153,6 +161,16 @@ def preprocess(img):
 st.markdown("<div class='upload-header'>Upload an oral cavity image (JPG or PNG)</div>", unsafe_allow_html=True)
 
 uploaded = st.file_uploader("", type=["jpg","jpeg","png"], label_visibility="collapsed")
+
+st.markdown("<div class='upload-section'>", unsafe_allow_html=True)
+
+st.markdown("<div class='upload-header'>Upload an oral cavity image (JPG or PNG)</div>", unsafe_allow_html=True)
+
+uploaded = st.file_uploader("", type=["jpg","jpeg","png"], label_visibility="collapsed")
+
+# prediction code here...
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 if uploaded:
     image = Image.open(uploaded)
