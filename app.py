@@ -91,9 +91,9 @@ html, body, [class*="css"]  {
     background: #ffffff;
     padding: 23px;
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
     line-height: 1.6;
-    box-shadow: 20px 20px 12px rgba(0,0,0,0.05);
+    box-shadow: 25px 25px 12px rgba(0,0,0,0.05);
 }
 
 .about-card h3 {
