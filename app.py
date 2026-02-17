@@ -45,8 +45,8 @@ html, body, [class*="css"]  {
     margin-bottom: 36px;
 }
 
-/* White Card */
-.white-card {
+/* Upload section */
+.upload-section {
     background: #ffffff;
     padding: 23px;
     border-radius: 10px;
@@ -89,10 +89,11 @@ html, body, [class*="css"]  {
 /* About Section */
 .about-card {
     background: #ffffff;
-    padding: 24px;
-    border-radius: 14px;
-    margin-top: 32px;
+    padding: 23px;
+    border-radius: 10px;
+    margin-top: 10px;
     line-height: 1.6;
+    box-shadow: 20px 20px 12px rgba(0,0,0,0.05);
 }
 
 .about-card h3 {
@@ -147,8 +148,7 @@ def preprocess(img):
     arr = np.array(img) / 255.0
     return np.expand_dims(arr, axis=0).astype(np.float32)
 
-# ---------------- UPLOAD SECTION (NEW WHITE CARD) ----------------
-st.markdown("<div class='white-card'>", unsafe_allow_html=True)
+# ---------------- UPLOAD SECTION ----------------
 
 st.markdown("<div class='upload-header'>Upload an oral cavity image (JPG or PNG)</div>", unsafe_allow_html=True)
 
