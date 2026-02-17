@@ -98,7 +98,7 @@ html, body, [class*="css"]  {
 
 .about-card h3 {
     color: #3275a8;
-    margin-top: 18px;
+    margin-top: 12px;
 }
 
 .about-card p,
