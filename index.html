@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>AI Oral Cancer Detection</title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; min-height: 15.0px}
+    span.s1 {font: 13.0px 'Apple Color Emoji'}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Oral Cancer AI Detection&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 class="title"&gt;<span class="s1">🦷</span> Oral Cancer AI Detection&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="subtitle"&gt;Upload an image of the oral cavity to receive an AI-based screening result.&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>This tool is for educational purposes only and does not replace professional diagnosis.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="upload-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form method="POST" enctype="multipart/form-data"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="upload-header"&gt;Upload an oral cavity image (JPG or PNG)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="file" name="file" accept="image/*" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="submit"&gt;Analyze&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>{% if risk_score is not none %}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="result-text"&gt;{{ risk_text }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="score"&gt;Risk Score: {{ risk_score }}%&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{% endif %}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="about-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;What is Oral Cancer?&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Oral cancer is a type of cancer that starts in the mouth or throat. It can affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection is very important because treatment works better and survival chances are higher.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Why Oral Health Matters&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Maintaining good oral health prevents cavities, gum disease, and helps detect oral cancer early. Regular dental check-ups help identify abnormalities early.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Key Reasons to Prioritize Oral Health:&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Early Detection: Regular oral examinations can catch cancer in its earliest, most treatable stages.&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Better Outcomes: Early detection has an 80–90% survival rate.&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Overall Health: Oral health is linked to heart, diabetes, and respiratory health.&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Prevention: Good hygiene and regular check-ups prevent serious oral problems.&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Warning Signs to Watch For:&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Sores or lesions that don’t heal&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;White or red patches&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Pain or numbness in mouth/lips&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Difficulty swallowing, chewing, or moving jaw&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Lumps or thickening in cheek/neck&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="disclaimer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;strong&gt;Disclaimer&lt;/strong&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>• This application is a student research project and is not a medical device.&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>• Results must not be used for diagnosis or treatment decisions.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
