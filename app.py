@@ -3,12 +3,9 @@ import numpy as np
 from PIL import Image
 import tflite_runtime.interpreter as tflite
 
-interpreter = tflite.Interpreter(model_path="oral_cancer_model.tflite")
-interpreter.allocate_tensors()
-
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
-    page_title="OriHealth - Oral Cancer Detection",
+    page_title="OriHealth: Oral Cancer AI Detection",
     page_icon="🦷",
     layout="centered"
 )
@@ -47,7 +44,7 @@ html, body, [class*="css"]  {
     margin-bottom: 36px;
 }
 
-/* Upload section */
+/* Upload Section */
 .upload-section {
     background: #ffffff;
     padding: 20px;
@@ -63,11 +60,11 @@ html, body, [class*="css"]  {
     margin-bottom: 12px;
 }
 
-/* Risk score */
+/* Risk Score */
 .score {
     margin-top: 14px;
-    font-weight: 600;
     color: #374151;
+    font-weight: 600;
 }
 
 /* Results */
@@ -120,11 +117,12 @@ html, body, [class*="css"]  {
     margin-top: 32px;
     line-height: 1.5;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
 # ---------------- HEADER ----------------
-st.markdown("<div class='title'>🦷 OriHealth - Oral Cancer AI Detection</div>", unsafe_allow_html=True)
+st.markdown("<div class='title'>🦷 OriHealth: Oral Cancer AI Detection</div>", unsafe_allow_html=True)
 st.markdown("""
 <div class='subtitle'>
 Upload an image of the oral cavity to receive an AI-based screening result.<br>
@@ -132,10 +130,10 @@ This tool is for educational purposes only and does not replace professional dia
 </div>
 """, unsafe_allow_html=True)
 
-# ---------------- MODEL ----------------
+# ---------------- LOAD MODEL ----------------
 @st.cache_resource
 def load_model():
-    interpreter = tf.lite.Interpreter(model_path="oral_cancer_model.tflite")
+    interpreter = tflite.Interpreter(model_path="oral_cancer_model.tflite")
     interpreter.allocate_tensors()
     return interpreter
 
@@ -152,7 +150,7 @@ def preprocess(img):
 st.markdown("<div class='upload-section'>", unsafe_allow_html=True)
 st.markdown("<div class='upload-header'>Upload an oral cavity image (JPG or PNG)</div>", unsafe_allow_html=True)
 
-uploaded = st.file_uploader("", type=["jpg","jpeg","png"], key="image_uploader")
+uploaded = st.file_uploader("", type=["jpg","jpeg","png"], key="file_uploader")
 
 if uploaded:
     image = Image.open(uploaded)
@@ -160,33 +158,24 @@ if uploaded:
 
     with st.spinner("Analyzing image..."):
         x = preprocess(image)
-        interpreter.set_tensor(input_details[0]['index'], x)
+        interpreter.set_tensor(input_details[0]["index"], x)
         interpreter.invoke()
-        raw_pred = float(interpreter.get_tensor(output_details[0]['index'])[0][0])
+        raw_pred = float(interpreter.get_tensor(output_details[0]["index"])[0][0])
 
     risk_score = int(raw_pred * 100)
 
     if risk_score >= 71:
-        st.markdown(
-            "<div class='abnormal'><strong>🔴 High Risk Detected</strong><br>The AI detected possible abnormalities.</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown("<div class='abnormal'><strong>🔴 High Risk Detected</strong><br>The AI detected possible abnormalities.</div>", unsafe_allow_html=True)
     elif risk_score >= 41:
-        st.markdown(
-            "<div class='abnormal'><strong>🟡 Moderate Risk Detected</strong><br>Some irregular features were identified.</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown("<div class='abnormal'><strong>🟡 Moderate Risk Detected</strong><br>Some irregular features were identified.</div>", unsafe_allow_html=True)
     else:
-        st.markdown(
-            "<div class='normal'><strong>🟢 Low Risk</strong><br>No significant abnormalities detected.</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown("<div class='normal'><strong>🟢 Low Risk</strong><br>No significant abnormalities detected.</div>", unsafe_allow_html=True)
 
     st.markdown(f"<div class='score'>Risk Score: {risk_score}%</div>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------------- ABOUT SECTION ----------------
+# ---------------- ABOUT ORAL CANCER ----------------
 st.markdown("""
 <div class='about-card'>
 <h3>What is Oral Cancer?</h3>
