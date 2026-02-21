@@ -1,7 +1,10 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import tensorflow as tf
+import tflite_runtime.interpreter as tflite
+
+interpreter = tflite.Interpreter(model_path="oral_cancer_model.tflite")
+interpreter.allocate_tensors()
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
