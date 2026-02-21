@@ -34,6 +34,24 @@ body {
 # -------------------------
 # Load TFLite Model
 # -------------------------
+import os
+
+@st.cache_resource
+def load_model():
+    if not os.path.exists("oral_cancer_model.tflite"):
+        st.error("Model file not found.")
+        st.stop()
+
+    interpreter = tf.lite.Interpreter(
+        model_path="oral_cancer_model.tflite",
+        num_threads=1
+    )
+    interpreter.allocate_tensors()
+    return interpreter
+
+interpreter = load_model()
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 @st.cache_resource
 def load_model():
     interpreter = tf.lite.Interpreter(model_path="oral_cancer_model.tflite")
