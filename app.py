@@ -7,27 +7,28 @@ import os
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
     page_title="OriHealth",
+    page_icon="🦷",
     layout="centered",
 )
 
-# ---------------- CUSTOM CSS ----------------
+# ---------------- CSS (MATCHED TO BASE44 APP) ----------------
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 html, body, [class*="css"]  {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Background Gradient */
 .stApp {
-    background: linear-gradient(135deg, #E6F4F1 0%, #F8FBFF 100%);
+    background: #F7F8FA;
+    color: #1C1C1E;
 }
 
-/* Hero Section */
+/* Hero Text */
 .hero {
     text-align: center;
-    padding: 60px 20px 30px 20px;
+    margin: 60px 0px 40px 0px;
 }
 
 .hero h1 {
@@ -38,86 +39,58 @@ html, body, [class*="css"]  {
 
 .hero p {
     font-size: 18px;
-    color: #555;
-    max-width: 600px;
-    margin: 0 auto;
+    color: #555555;
 }
 
-/* Card Style */
+/* Upload Card */
 .card {
     background: white;
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    margin-top: 40px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    margin: 0px auto 40px auto;
+    max-width: 480px;
 }
 
-/* Upload Title */
-.card h2 {
+.upload-text {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
     text-align: center;
-    margin-bottom: 20px;
 }
 
-/* Result Boxes */
-.result-good {
-    background: #ECFDF5;
-    border-left: 6px solid #10B981;
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 20px;
-}
-
-.result-bad {
-    background: #FEF2F2;
-    border-left: 6px solid #EF4444;
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 20px;
-}
-
-/* Section */
-.section {
-    margin-top: 80px;
+/* Result */
+.result-score {
     text-align: center;
-    padding: 0 20px;
-}
-
-.section h3 {
-    font-size: 28px;
-    margin-bottom: 15px;
-}
-
-.section p {
-    max-width: 700px;
-    margin: 0 auto;
-    color: #555;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 18px;
 }
 
 /* Footer */
 .footer {
-    margin-top: 80px;
     text-align: center;
+    color: #777777;
     font-size: 14px;
-    color: #777;
-    padding-bottom: 40px;
+    margin-bottom: 40px;
+    margin-top: 20px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- HERO ----------------
+# ---------------- HEADER ----------------
 st.markdown("""
-<div class='hero'>
+<div class="hero">
 <h1>🦷 OriHealth</h1>
-<p>AI-powered oral cancer screening tool designed for early detection awareness.
-This educational tool does not replace professional diagnosis.</p>
+<p>Upload an oral cavity image for an AI-powered screening result.</p>
+<p>This tool is for educational purposes only and does not replace professional diagnosis.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ---------------- MODEL ----------------
+# ---------------- MODEL CHECK ----------------
 MODEL_PATH = "oral_cancer_model.tflite"
-
 if not os.path.exists(MODEL_PATH):
-    st.error("Model file not found.")
+    st.error("⚠ Model file not found. Upload the .tflite file into your repo.")
     st.stop()
 
 @st.cache_resource
@@ -132,16 +105,17 @@ output_details = interpreter.get_output_details()
 
 def preprocess(img):
     img = img.convert("RGB").resize((224, 224))
-    arr = np.array(img).astype(np.float32) / 255.0
+    arr = np.array(img, dtype=np.float32) / 255.0
     return np.expand_dims(arr, axis=0)
 
 # ---------------- UPLOAD CARD ----------------
 st.markdown("<div class='card'>", unsafe_allow_html=True)
-st.markdown("<h2>Upload Oral Cavity Image</h2>", unsafe_allow_html=True)
 
-uploaded = st.file_uploader("", type=["jpg", "jpeg", "png"])
+st.markdown("<div class='upload-text'>Select an Oral Cavity Image (JPG/PNG)</div>", unsafe_allow_html=True)
 
-if uploaded:
+uploaded = st.file_uploader("", type=["jpg", "jpeg", "png"], key="upload")
+
+if uploaded is not None:
     image = Image.open(uploaded)
     st.image(image, use_container_width=True)
 
@@ -149,47 +123,25 @@ if uploaded:
 
     interpreter.set_tensor(input_details[0]["index"], x)
     interpreter.invoke()
+
     output = interpreter.get_tensor(output_details[0]["index"])
 
+    # interpret output safely
     if len(output.shape) == 2:
-        score = float(output[0][0])
+        raw_pred = float(output[0][0])
     else:
-        score = float(output[0])
+        raw_pred = float(output[0])
 
-    risk = int(score * 100)
+    score = int(raw_pred * 100)
 
-    if risk >= 50:
-        st.markdown(f"""
-        <div class='result-bad'>
-        <strong>⚠ Potential Risk Detected</strong><br>
-        AI Confidence Score: {risk}%<br>
-        Please consult a dental professional.
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div class='result-good'>
-        <strong>✅ No Significant Risk Detected</strong><br>
-        AI Confidence Score: {risk}%<br>
-        Continue regular dental check-ups.
-        </div>
-        """, unsafe_allow_html=True)
+    # display result
+    st.markdown(f"<div class='result-score'>🎯 Risk Score: {score}%</div>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------------- ABOUT SECTION ----------------
-st.markdown("""
-<div class='section'>
-<h3>What is Oral Cancer?</h3>
-<p>Oral cancer develops in the mouth or throat and can affect the lips, tongue,
-cheeks, floor or roof of the mouth. Early detection significantly increases survival rates.</p>
-</div>
-""", unsafe_allow_html=True)
-
 # ---------------- FOOTER ----------------
 st.markdown("""
-<div class='footer'>
-This application is a student research project and not a certified medical device.
-Always seek professional dental care for diagnosis.
+<div class="footer">
+This app is a student research project and is not medical advice. Always consult a healthcare professional.
 </div>
 """, unsafe_allow_html=True)
