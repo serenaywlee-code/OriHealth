@@ -6,98 +6,120 @@ import os
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
-    page_title="OriHealth: Oral Cancer AI Detection",
-    layout="centered"
+    page_title="OriHealth",
+    layout="centered",
 )
 
-# ---------------- STYLES ----------------
+# ---------------- CUSTOM CSS ----------------
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 html, body, [class*="css"]  {
-    font-family: 'Lora', serif !important;
-    font-weight: 400 !important;
+    font-family: 'Inter', sans-serif;
 }
 
+/* Background Gradient */
 .stApp {
-    background-color: #D9EDEB;
+    background: linear-gradient(135deg, #E6F4F1 0%, #F8FBFF 100%);
 }
 
-.title {
-    font-size: 40px;
+/* Hero Section */
+.hero {
     text-align: center;
+    padding: 60px 20px 30px 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 600;
     margin-bottom: 10px;
 }
 
-.subtitle {
-    text-align: center;
-    font-size: 16px;
-    color: #4a4a4a;
-    margin-bottom: 36px;
+.hero p {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.upload-section {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.upload-header {
-    color: #3275a8;
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
-.normal {
-    background: #f0fdf4;
-    border-left: 6px solid #22c55e;
-    padding: 16px;
-    margin-top: 16px;
-}
-
-.risk {
-    background: #fef2f2;
-    border-left: 6px solid #dc2626;
-    padding: 16px;
-    margin-top: 16px;
-}
-
-.about-card {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 14px;
+/* Card Style */
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     margin-top: 40px;
 }
 
-.disclaimer {
-    background: rgba(254, 202, 202, 0.45);
-    border-left: 6px solid #dc2626;
-    padding: 16px;
-    margin-top: 32px;
+/* Upload Title */
+.card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Result Boxes */
+.result-good {
+    background: #ECFDF5;
+    border-left: 6px solid #10B981;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.result-bad {
+    background: #FEF2F2;
+    border-left: 6px solid #EF4444;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+/* Section */
+.section {
+    margin-top: 80px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.section h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.section p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #555;
+}
+
+/* Footer */
+.footer {
+    margin-top: 80px;
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    padding-bottom: 40px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- HEADER ----------------
-st.markdown("<div class='title'>🦷 OriHealth: Oral Cancer AI Detection</div>", unsafe_allow_html=True)
-
+# ---------------- HERO ----------------
 st.markdown("""
-<div class='subtitle'>
-Upload an image of the oral cavity to receive an AI-based screening result.<br>
-This tool is for educational purposes only and does not replace professional diagnosis.
+<div class='hero'>
+<h1>🦷 OriHealth</h1>
+<p>AI-powered oral cancer screening tool designed for early detection awareness.
+This educational tool does not replace professional diagnosis.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ---------------- MODEL CHECK ----------------
+# ---------------- MODEL ----------------
 MODEL_PATH = "oral_cancer_model.tflite"
 
 if not os.path.exists(MODEL_PATH):
-    st.error("Model file not found. Make sure oral_cancer_model.tflite is in your repository root folder.")
+    st.error("Model file not found.")
     st.stop()
 
-# ---------------- LOAD MODEL ----------------
 @st.cache_resource
 def load_model():
     interpreter = tf.lite.Interpreter(model_path=MODEL_PATH)
@@ -108,51 +130,48 @@ interpreter = load_model()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
-# ---------------- PREPROCESS FUNCTION ----------------
 def preprocess(img):
     img = img.convert("RGB").resize((224, 224))
     arr = np.array(img).astype(np.float32) / 255.0
     return np.expand_dims(arr, axis=0)
 
-# ---------------- UPLOAD SECTION ----------------
-st.markdown("<div class='upload-section'>", unsafe_allow_html=True)
-st.markdown("<div class='upload-header'>Upload an oral cavity image (JPG or PNG)</div>", unsafe_allow_html=True)
+# ---------------- UPLOAD CARD ----------------
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+st.markdown("<h2>Upload Oral Cavity Image</h2>", unsafe_allow_html=True)
 
 uploaded = st.file_uploader("", type=["jpg", "jpeg", "png"])
 
-if uploaded is not None:
+if uploaded:
     image = Image.open(uploaded)
-    st.image(image, caption="Uploaded Image", use_container_width=True)
+    st.image(image, use_container_width=True)
 
     x = preprocess(image)
 
     interpreter.set_tensor(input_details[0]["index"], x)
     interpreter.invoke()
+    output = interpreter.get_tensor(output_details[0]["index"])
 
-    output_data = interpreter.get_tensor(output_details[0]["index"])
-
-    # Safely handle different output shapes
-    if len(output_data.shape) == 2:
-        raw_pred = float(output_data[0][0])
+    if len(output.shape) == 2:
+        score = float(output[0][0])
     else:
-        raw_pred = float(output_data[0])
+        score = float(output[0])
 
-    risk_score = int(raw_pred * 100)
+    risk = int(score * 100)
 
-    if risk_score >= 50:
+    if risk >= 50:
         st.markdown(f"""
-        <div class='risk'>
-        ⚠️ <strong>Potential Risk Detected</strong><br>
-        AI Confidence Score: {risk_score}%<br>
-        Please consult a dental professional for proper evaluation.
+        <div class='result-bad'>
+        <strong>⚠ Potential Risk Detected</strong><br>
+        AI Confidence Score: {risk}%<br>
+        Please consult a dental professional.
         </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown(f"""
-        <div class='normal'>
-        ✅ <strong>No Significant Risk Detected</strong><br>
-        AI Confidence Score: {risk_score}%<br>
-        Continue maintaining regular dental check-ups.
+        <div class='result-good'>
+        <strong>✅ No Significant Risk Detected</strong><br>
+        AI Confidence Score: {risk}%<br>
+        Continue regular dental check-ups.
         </div>
         """, unsafe_allow_html=True)
 
@@ -160,26 +179,17 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------- ABOUT SECTION ----------------
 st.markdown("""
-<div class='about-card'>
+<div class='section'>
 <h3>What is Oral Cancer?</h3>
-<p>Oral cancer starts in the mouth or throat and may affect lips, tongue, cheeks, floor/roof of mouth, sinuses, or throat. Early detection significantly improves survival rates.</p>
-
-<h3>Warning Signs:</h3>
-<ul>
-<li>Sores that do not heal</li>
-<li>White or red patches</li>
-<li>Pain or numbness</li>
-<li>Difficulty swallowing or chewing</li>
-<li>Lumps or thickening</li>
-</ul>
+<p>Oral cancer develops in the mouth or throat and can affect the lips, tongue,
+cheeks, floor or roof of the mouth. Early detection significantly increases survival rates.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ---------------- DISCLAIMER ----------------
+# ---------------- FOOTER ----------------
 st.markdown("""
-<div class='disclaimer'>
-<strong>Disclaimer</strong><br>
-• This application is a student research project and is not a medical device.<br>
-• Results must not be used for diagnosis or treatment decisions.
+<div class='footer'>
+This application is a student research project and not a certified medical device.
+Always seek professional dental care for diagnosis.
 </div>
 """, unsafe_allow_html=True)
